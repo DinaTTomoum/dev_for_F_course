@@ -1,5 +1,6 @@
 let icereamShop: string = "Karlos Parlor"
 open System.Net
+open System.Security.Claims
 
 let icecream1 = "strawberry"
 
@@ -27,19 +28,22 @@ let dayResults sold price =
 
 dayResults 25. 3.
 
-let flavorPrice flavor =
-    if flavor = "strawberry" then 
+type SpecialFlavor = 
+    |   Redrising
+    |   Dreamcream
+
+type Flavor =
+    |   Strawberry
+    |   Vanilla 
+
+let flavorPrice Flavor =
+    match Flavor with
+    | Strawberry ->
         1.1
-    else
+    | Vanilla  ->
         0.9
 
-dayResults 100. (flavorPrice "strawberry")
-
-flavorPrice "strawberry"
-|> dayResults 100.
-
-flavorPrice " "
-|> dayResults 100.
+dayResults 100. (flavorPrice Strawberry)
 
 let strawberryRevenue =
     "strawberry"
@@ -58,11 +62,12 @@ let resultsFor ice sold =
 
 resultsFor "strawberry" 100. + resultsFor "vanilla" 50.
 
-let iceName flavor =
-    if flavor = "red rising" then
-    "strawberry"
-    else
-    "vanilla"
+let iceName Flavor =
+    match Flavor with
+    | Redrising ->
+        Strawberry
+    | Dreamcream ->
+        Vanilla
 
 "red rising"
     |> iceName
@@ -84,15 +89,15 @@ let priceForSpecial =
 
 let sales = 
     [
-        "red rising"
-        "dream cream"
-        "red rising"
-        "red rising"
-        "dream cream"
+        Redrising
+        Dreamcream
+        Redrising
+        Redrising
+        Dreamcream
     ]
 
 sales
-|> List.map (fun flavor -> priceForSpecial flavor)
+|> List.map (fun Flavor -> priceForSpecial Flavor)
 |> List.sum
 
 sales
