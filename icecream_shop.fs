@@ -10,18 +10,16 @@ type Flavor =
     |   Vanilla 
     |   Special of SpecialFlavor
 
-let priceforFlavors flavor =
+let rec priceforFlavors flavor =
     match flavor with
     |   Strawberry ->
             1.1
     |   Vanilla ->
             0.9
-    |   Special special ->
-        match special with
-        |   Redrising ->
-                1.1
-        |   Dreamcream ->
-                0.9
+    |   Special Redrising ->
+            (priceforFlavors Strawberry)+ 0.2
+    |   Special Dreamcream ->
+            (priceforFlavors Vanilla) + 0.2
     
 
 // map all the items in the list below to their price
